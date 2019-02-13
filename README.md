@@ -1,3 +1,7 @@
+<https://rustwasm.github.io/book/>
+
+---
+
 # 🦀🕸️ `wasm-pack-template`
 
 A template for kick starting a Rust and WebAssembly project using
