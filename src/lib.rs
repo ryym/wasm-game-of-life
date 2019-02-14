@@ -4,7 +4,7 @@ extern crate wasm_bindgen;
 mod utils;
 
 use cfg_if::cfg_if;
-use std::fmt;
+use std::{fmt, iter};
 use wasm_bindgen::prelude::*;
 
 cfg_if! {
@@ -62,6 +62,24 @@ impl Universe {
 
     pub fn height(&self) -> u32 {
         self.height
+    }
+
+    /// Set the width of the universe.
+    pub fn set_width(&mut self, width: u32) {
+        self.width = width;
+        self.reset_cells();
+    }
+
+    /// Set the height of the universe.
+    pub fn set_height(&mut self, height: u32) {
+        self.height = height;
+        self.reset_cells();
+    }
+
+    /// Resets all cells to the dead state.
+    fn reset_cells(&mut self) {
+        let cell_count = (self.width * self.height) as usize;
+        self.cells = iter::repeat(Cell::Dead).take(cell_count).collect();
     }
 
     pub fn cells(&self) -> *const Cell {
@@ -127,6 +145,23 @@ impl Universe {
         }
 
         count
+    }
+}
+
+// A block without [wasm_bindgen]
+impl Universe {
+    /// Get the dead and alive values of the entire universe.
+    pub fn get_cells(&self) -> &[Cell] {
+        &self.cells
+    }
+
+    /// Set cells to be alive in a universe by passing the row and column
+    /// of each cell as an array.
+    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+        for &(row, col) in cells {
+            let idx = self.get_index(row, col);
+            self.cells[idx] = Cell::Alive;
+        }
     }
 }
 
