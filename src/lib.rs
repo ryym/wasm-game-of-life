@@ -91,7 +91,7 @@ impl Universe {
     }
 
     /// Resets all cells to the dead state.
-    fn reset_cells(&mut self) {
+    pub fn reset_cells(&mut self) {
         let cell_count = (self.width * self.height) as usize;
         self.cells = iter::repeat(Cell::Dead).take(cell_count).collect();
     }

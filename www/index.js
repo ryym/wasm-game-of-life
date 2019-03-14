@@ -41,6 +41,11 @@ playPauseButton.addEventListener('click', event => {
   }
 });
 
+const resetCellsButton = document.getElementById('reset-cells');
+resetCellsButton.addEventListener('click', event => {
+  universe.reset_cells();
+});
+
 const ctx = canvas.getContext('2d');
 
 let animationId = null;
